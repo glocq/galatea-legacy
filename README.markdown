@@ -14,7 +14,8 @@ Building
 ```
 apt install libinput-dev
 ```
-You will also need a recent enough version of CMake
+
+1. You will also need a recent enough version of CMake:
 ```
 apt install cmake
 ```
