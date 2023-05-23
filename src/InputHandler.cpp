@@ -44,3 +44,20 @@ void InputHandler::inputLoop() {
         }
     }
 }
+
+
+double InputHandler::getX()
+{
+    return this->x;
+}
+
+double InputHandler::getY()
+{
+    return this->y;
+}
+
+double InputHandler::getPressure()
+{
+    return this->pressure;
+}
+

@@ -16,6 +16,9 @@ public:
     ~InputHandler();
 
     //==============================================================================
+    double getX();
+    double getY();
+    double getPressure();
 
 private:
 

@@ -23,7 +23,8 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+
+    g.drawFittedText ("X: " + String(inputHandler.getX()) + ", Y: " + String(inputHandler.getY()) + ", Pressure: " + String(inputHandler.getPressure()), getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void AudioPluginAudioProcessorEditor::resized()
