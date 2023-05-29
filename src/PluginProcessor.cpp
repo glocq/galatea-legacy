@@ -1,4 +1,5 @@
 #include "PluginProcessor.h"
+#include "InputHandler.h"
 #include "PluginEditor.h"
 
 //==============================================================================
@@ -121,12 +122,34 @@ bool AudioPluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
   #endif
 }
 
-void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
-                                              juce::MidiBuffer& midiMessages)
+void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
+                                             juce::MidiBuffer& midiMessages)
 {
-    juce::ignoreUnused (midiMessages);
+    // MIDI effect, so no audio data
+    jassert(buffer.getNumChannels() == 0);
 
+    // This might be useful if we needed to manage timing inside one block,
+    // but we only just send one message per block:
+    // auto numSamples = buffer.getNumSamples(); 
+
+    // Pretty sure this is useless since we're not dealing with audio data,
+    // but I'll leave it here just in case
     juce::ScopedNoDenormals noDenormals;
+
+    if (sendMPEConfigFlag) {
+        midiMessages.addEvents(MPEMessages::setLowerZonePerNotePitchbendRange(48), 0, -1, 0);
+        midiMessages.addEvents(MPEMessages::setUpperZonePerNotePitchbendRange(48), 0, -1, 0);
+        sendMPEConfigFlag = false; // crossing "send MPE config msg" off our todo list
+    }
+
+    if (!contact && inputHandler.isPenDown()) { // contact started
+        midiMessages.addEvent(juce::MidiMessage::noteOn(1, 0, (juce::uint8) (inputHandler.getPressure() * 128)), 0);
+        contact = true;
+    } else if (contact && !inputHandler.isPenDown()) { // contact stopped
+        midiMessages.addEvent(juce::MidiMessage::noteOff(1, 0), 0);
+        contact = false;
+    }
+
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
@@ -151,6 +174,12 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         juce::ignoreUnused (channelData);
         // ..do something to the data...
     }
+}
+
+//==============================================================================
+void AudioPluginAudioProcessor::buttonClicked (juce::Button*)
+{
+    sendMPEConfigFlag = true;
 }
 
 //==============================================================================

@@ -1,9 +1,11 @@
 #pragma once
 
+#include "InputHandler.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 
 //==============================================================================
-class AudioPluginAudioProcessor  : public juce::AudioProcessor
+class AudioPluginAudioProcessor : public juce::AudioProcessor,
+                                  public juce::Button::Listener
 {
 public:
     //==============================================================================
@@ -18,6 +20,8 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     using AudioProcessor::processBlock;
+
+    void buttonClicked (juce::Button* button) override;
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -43,6 +47,13 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    //==============================================================================
+    InputHandler inputHandler;
+    bool contact = false;
+    bool sendMPEConfigFlag = true; // this is true when we should output the MPE
+                                   // config flag to the host, either because we just
+                                   // started up, or because the user requested it
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
 };

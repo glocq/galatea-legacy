@@ -32,7 +32,7 @@ juce_add_plugin(Galatea
     # ICON_SMALL ...
     # COMPANY_NAME ...                          # Specify the name of the plugin's author
     IS_SYNTH FALSE
-    NEEDS_MIDI_INPUT FALSE
+    NEEDS_MIDI_INPUT TRUE # We don't actually get MIDI input, but I suspect we need an input channel anyway to have an output channel
     NEEDS_MIDI_OUTPUT TRUE
     # IS_MIDI_EFFECT TRUE/FALSE                 # Is this plugin a MIDI effect?
     VST_NUM_MIDI_OUTS 1
@@ -41,7 +41,7 @@ juce_add_plugin(Galatea
     PLUGIN_MANUFACTURER_CODE Juce               # A four-character manufacturer id with at least one upper-case character
     PLUGIN_CODE Dem0                            # A unique four-character plugin id with exactly one upper-case character
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
-    FORMATS VST3                                # AU Standalone AAX Unity VST AUv3
+    FORMATS VST3 Standalone                               # AU Standalone AAX Unity VST AUv3
     PRODUCT_NAME "Galatea")
 
 # `juce_generate_juce_header` will create a JuceHeader.h for a given target, which will be generated

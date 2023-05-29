@@ -19,15 +19,21 @@ public:
     double getX();
     double getY();
     double getPressure();
+    double getDistance();
+    bool   isNear();
+    bool   isPenDown();
 
 private:
 
     /**
-     * Visible parameters
+     * Tablet state
      */
+    bool near    = false; // is the tip near the tablet or touching it?
+    bool contact = false; // is the tip touching the tablet?
     double x = 0.;
     double y = 0.;
     double pressure = 0.;
+    double distance = 0.;
 
     /**
      * Threading
