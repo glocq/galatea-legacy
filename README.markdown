@@ -8,10 +8,10 @@ Galatea uses the `libinput` library to turn data from a graphic tablet into MIDI
 Limitations
 ------------
 
-* Only available on Linux.
-* Very tailored to my setup as of now. In particular, it is specific to the dimensions of the tablet I own, a Wacom Intuos Art. I am planning on making Galatea configurable, so that I am not the only one able to use it. In the meantime, if you have some basic programming skills, it should be possible to change the code to adapt to your device; see in particular the `InputHandler` class. You can also just raise an issue in the tracker; this signals to me that there's interest in the project, and gives me a way to ask you for more info about your use case/hardware.
-* Does not disable the mouse pointer on the tablet, so unless you're careful, you're going to click all over your screen. Until I find the solution to that, I recommend making the Galatea window fullscreen: since it is empty, it gives you a nice, large area where you can click freely without consequences.
-* Compilation is much slower than it should be; I will probably manage to speed it up by disabling the JUCE modules which I don't use.
+* **Only available on Linux**.
+* **Very tailored to my setup as of now.** In particular, it is specific to the dimensions of the tablet I own, a Wacom Intuos Art. I am planning on making Galatea configurable, so that I am not the only one able to use it. In the meantime, if you have some basic programming skills, it should be possible to change the code to adapt to your device; see in particular the `InputHandler` class. You can also just raise an issue in the tracker; this signals to me that there's interest in the project, and gives me a way to ask you for more info about your use case/hardware.
+* **Does not disable the mouse pointer on the tablet**, so unless you're careful, you're going to click all over your screen. Until I find the solution to that, I recommend making the Galatea window fullscreen: since it is empty, it gives you a nice, large area where you can click freely without consequences.
+* **Compilation is much slower than it should be**; I will probably manage to speed it up by disabling the JUCE modules which I don't use.
 
 Building
 ---------
