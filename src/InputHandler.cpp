@@ -97,26 +97,18 @@ void InputHandler::inputLoop() {
 }
 
 
-double InputHandler::getX() {
-    return x;
-}
+void InputHandler::addMIDIMessages(MidiBuffer& buffer)
+{
+    if(contact) {
+        buffer.addEvent(MidiMessage::pitchWheel(1, (int) (16383 * x / 216)), 0);
+        buffer.addEvent(MidiMessage::channelPressureChange(1, (int) (pressure * 127)), 0);
+    }
 
-double InputHandler::getY() {
-    return y;
-}
-
-double InputHandler::getPressure() {
-    return pressure;
-}
-
-double InputHandler::getDistance() {
-    return distance;
-}
-
-bool InputHandler::isNear() {
-    return near;
-}
-
-bool InputHandler::isPenDown() {
-    return contact;
+    if (contact && !playing) {
+        buffer.addEvent(MidiMessage::noteOn(1, baseNote, pressure), 0);
+        playing = true;
+    } else if (!contact && playing) {
+        buffer.addEvent(MidiMessage::noteOff(1, baseNote), 0);
+        playing = false;
+    }
 }

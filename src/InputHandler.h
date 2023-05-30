@@ -15,13 +15,8 @@ public:
     explicit InputHandler();
     ~InputHandler();
 
-    //==============================================================================
-    double getX();
-    double getY();
-    double getPressure();
-    double getDistance();
-    bool   isNear();
-    bool   isPenDown();
+    void addMIDIMessages(MidiBuffer&);
+    void resendSetupMessages();
 
 private:
 
@@ -30,10 +25,17 @@ private:
      */
     bool near    = false; // is the tip near the tablet or touching it?
     bool contact = false; // is the tip touching the tablet?
+    bool playing = false; // has a noteOn been sent yet?
+
     double x = 0.;
     double y = 0.;
-    double pressure = 0.;
-    double distance = 0.;
+    float pressure = 0.;
+    float distance = 0.;
+
+    /**
+     * MIDI/MPE
+     */
+    int baseNote = 60;
 
     /**
      * Threading
