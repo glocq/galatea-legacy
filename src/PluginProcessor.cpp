@@ -1,5 +1,4 @@
 #include "PluginProcessor.h"
-#include "InputHandler.h"
 #include "PluginEditor.h"
 
 //==============================================================================
@@ -127,9 +126,6 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 {
     buffer.clear();
     midiMessages.clear();
-
-    inputHandler.addMIDIMessages(midiMessages);
-
 }
 
 //==============================================================================

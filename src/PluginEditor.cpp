@@ -7,6 +7,8 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 {
     juce::ignoreUnused(processorRef);
 
+    addAndMakeVisible(controlSurface);
+
     setResizable(true, true);
     setResizeLimits(500, 500, 10000, 10000);
     // Make sure that before the constructor has finished, you've set the
@@ -27,4 +29,6 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
+    controlSurface.setBounds(10, 10, 50, 50);
 }
+

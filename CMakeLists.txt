@@ -17,14 +17,10 @@ juce_add_plugin(Galatea
 # instead of wondering about which JUCE module we need every time.
 juce_generate_juce_header(Galatea)
 
-# Link the libinput library (this is how we get the tablet data)
-find_package(Libinput)
-target_link_libraries(Galatea PRIVATE Libinput::Libinput)
-
 # Specify which files are source files
 target_sources(Galatea
     PRIVATE
-        src/InputHandler.cpp
+        src/ControlSurface.cpp
         src/PluginEditor.cpp
         src/PluginProcessor.cpp)
 
@@ -39,7 +35,6 @@ target_compile_definitions(Galatea
 target_link_libraries(Galatea
     PRIVATE
         juce::juce_audio_utils
-        udev # we need this to be able to use libinput
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
