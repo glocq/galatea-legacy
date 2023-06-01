@@ -2,6 +2,8 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
+#include "MidiSender.h"
+
 //==============================================================================
 class AudioPluginAudioProcessor : public juce::AudioProcessor
 {
@@ -41,6 +43,9 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+
+    //==============================================================================
+    MidiSender midiSender;
 
 private:
     //==============================================================================

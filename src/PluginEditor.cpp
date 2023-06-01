@@ -3,7 +3,7 @@
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p)
+    : AudioProcessorEditor (&p), controlSurface(p.midiSender), processorRef (p)
 {
     juce::ignoreUnused(processorRef);
 
@@ -29,6 +29,6 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
-    controlSurface.setBounds(10, 10, 50, 50);
+    controlSurface.setBounds(10, 10, getWidth() - 20, getHeight() - 20);
 }
 

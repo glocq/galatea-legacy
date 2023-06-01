@@ -15,12 +15,13 @@ juce_add_plugin(Galatea
 
 # Allow use of `#include <JuceHeader.h>` every time we need to use JUCE symbols,
 # instead of wondering about which JUCE module we need every time.
-juce_generate_juce_header(Galatea)
+# juce_generate_juce_header(Galatea)
 
 # Specify which files are source files
 target_sources(Galatea
     PRIVATE
         src/ControlSurface.cpp
+        src/MidiSender.cpp
         src/PluginEditor.cpp
         src/PluginProcessor.cpp)
 

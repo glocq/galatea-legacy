@@ -126,6 +126,7 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 {
     buffer.clear();
     midiMessages.clear();
+    midiSender.getMidiMessages(midiMessages);
 }
 
 //==============================================================================
