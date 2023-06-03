@@ -9,8 +9,8 @@ class MidiSender
 public:
     MidiSender();
     ~MidiSender();
-    void registerMouseContact(const juce::MouseEvent&, float componentWidth, float componentHeight);
-    void registerMouseUp(const juce::MouseEvent&);
+    void registerMouseContact(float x, float y, float pressure);
+    void registerMouseUp();
     void getMidiMessages(juce::MidiBuffer&);
     void setX(float);
     void setY(float);

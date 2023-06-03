@@ -3,6 +3,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 project(GALATEA VERSION 0.0.1)
 
+option(TRY_USING_LIBINPUT "Try using libinput if on Linux. If this is unchecked, or if not on Linux, or if libinput was not found, Galatea will fall back to using JUCE event detection, which does not seem to detect tablet pen pressure on Linux." TRUE)
+
 add_subdirectory(JUCE)
 
 # This was originally going to be a plugin, so we add the target using `juce_add_plugin`,
@@ -17,6 +19,20 @@ juce_add_plugin(Galatea
 # instead of wondering about which JUCE module we need every time.
 # juce_generate_juce_header(Galatea)
 
+if(TRY_USING_LIBINPUT AND UNIX AND NOT APPLE)
+    message("-- Looking for libinput...")
+    find_package(Libinput)
+    if(Libinput_FOUND)
+        message("-- libinput found!")
+    else()
+        message("-- libinput not found. Relying on JUCE event detection instead.")
+    endif()
+endif()
+
+if(Libinput_FOUND)
+    target_link_libraries(Galatea PRIVATE Libinput::Libinput)
+endif()
+
 # Specify which files are source files
 target_sources(Galatea
     PRIVATE
@@ -24,6 +40,10 @@ target_sources(Galatea
         src/MidiSender.cpp
         src/PluginEditor.cpp
         src/PluginProcessor.cpp)
+
+if(Libinput_FOUND)
+    target_sources(Galatea PRIVATE src/PressureDetector.cpp)
+endif()
 
 # Preprocessor definitions
 target_compile_definitions(Galatea
@@ -33,6 +53,10 @@ target_compile_definitions(Galatea
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
+if(Libinput_FOUND)
+    target_compile_definitions(Galatea PUBLIC LIBINPUT)
+endif()
+
 target_link_libraries(Galatea
     PRIVATE
         juce::juce_audio_utils
@@ -40,3 +64,7 @@ target_link_libraries(Galatea
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)
+
+if(Libinput_FOUND)
+    target_link_libraries(Galatea PRIVATE udev)
+endif()

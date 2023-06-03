@@ -9,20 +9,17 @@ MidiSender::~MidiSender()
 {
 }
 
-void MidiSender::registerMouseContact(const juce::MouseEvent& event, float componentWidth, float componentHeight)
+void MidiSender::registerMouseContact(float xVal, float yVal, float pressureVal)
 {
-    x = std::max((float) 0, std::min((float) 1, event.position.getX() / componentWidth));
-    y = std::max((float) 0, std::min((float) 1, event.position.getY() / componentHeight));
-    if (event.isPressureValid()) {
-        pressure = event.pressure;
-    } else {
-        pressure = 1;
-    }
+    x = xVal;
+    y = yVal;
+    pressure = pressureVal;
+
     pointerDown = true;
     pendingData = true;
 }
 
-void MidiSender::registerMouseUp(const juce::MouseEvent&)
+void MidiSender::registerMouseUp()
 {
     pressure = 0;
     pointerDown = false;
