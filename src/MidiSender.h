@@ -12,9 +12,6 @@ public:
     void registerMouseContact(float x, float y, float pressure);
     void registerMouseUp();
     void getMidiMessages(juce::MidiBuffer&);
-    void setX(float);
-    void setY(float);
-    void setPressure(float);
 
 private:
     bool pointerDown = false;

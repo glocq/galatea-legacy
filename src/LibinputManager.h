@@ -5,15 +5,19 @@
 #include <libinput.h>
 
 
-class PressureDetector
+class ControlSurface;
+
+class LibinputManager
 {
 public:
-    PressureDetector();
-    ~PressureDetector();
+
+    LibinputManager(ControlSurface&);
+    ~LibinputManager();
 
     float getPressure();
 
 private:
+
     struct udev* udev; // udev context
     struct libinput* li; // libinput context
     struct libinput_event* event; // we'll store each new event in there
@@ -27,10 +31,16 @@ private:
         .close_restricted = closeDevice
     };
 
+    // Listener; we'll inform it about the events we receive
+    ControlSurface& listener;
+
     // Input loop, which will listen for new events
     std::thread inputThread;
     void inputLoop();
     bool quit = false; // raised whenever we're done and the thread should quit
 
-    float pressure; // pressure of the stylus on the tablet; most important member of this class!
+    // Tablet state
+    float x = 0;
+    float y = 0;
+    float pressure = 0;
 };

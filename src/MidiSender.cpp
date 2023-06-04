@@ -11,9 +11,9 @@ MidiSender::~MidiSender()
 
 void MidiSender::registerMouseContact(float xVal, float yVal, float pressureVal)
 {
-    x = xVal;
-    y = yVal;
-    pressure = pressureVal;
+    x = std::max(0.0f, std::min(1.0f, xVal));
+    y = std::max(0.0f, std::min(1.0f, yVal));
+    pressure = std::max(0.0f, std::min(1.0f, pressureVal));
 
     pointerDown = true;
     pendingData = true;
@@ -46,19 +46,3 @@ void MidiSender::getMidiMessages(juce::MidiBuffer& buffer)
         pendingData = false;
     }
 }
-
-void MidiSender::setX(float value)
-{
-    x = value;
-}
-
-void MidiSender::setY(float value)
-{
-    y = value;
-}
-
-void MidiSender::setPressure(float value)
-{
-    pressure = value;
-}
-

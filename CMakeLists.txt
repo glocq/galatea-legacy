@@ -42,7 +42,7 @@ target_sources(Galatea
         src/PluginProcessor.cpp)
 
 if(Libinput_FOUND)
-    target_sources(Galatea PRIVATE src/PressureDetector.cpp)
+    target_sources(Galatea PRIVATE src/LibinputManager.cpp)
 endif()
 
 # Preprocessor definitions
