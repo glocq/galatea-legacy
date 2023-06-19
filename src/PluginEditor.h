@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PluginProcessor.h"
+#include "SettingsWindow.h"
 #include "ControlSurface.h"
 
 //==============================================================================
@@ -15,6 +16,8 @@ public:
     void resized() override;
 
 private:
+    juce::TextButton settingsButton {"Surface settings"};
+    std::optional<SettingsWindow> settingsWindow;
     ControlSurface controlSurface;
 
     // This reference is provided as a quick way for your editor to

@@ -7,13 +7,20 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 {
     juce::ignoreUnused(processorRef);
 
+    addAndMakeVisible(settingsButton);
     addAndMakeVisible(controlSurface);
 
     setResizable(true, true);
     setResizeLimits(500, 500, 10000, 10000);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (700, 700);
+    setSize(700, 700);
+
+    settingsButton.onClick = [&]() { // see https://forum.juce.com/t/open-a-new-window/40347/8
+        settingsWindow.emplace();
+        settingsWindow->setSize(100, 100);
+        settingsWindow->setVisible(1);
+    };
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
@@ -29,6 +36,10 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
-    controlSurface.setBounds(10, 10, getWidth() - 20, getHeight() - 20);
+    int barWidth = 130;
+    int barHeight = 30;
+    int margin = 10;
+    settingsButton.setBounds(margin, margin, barWidth, barHeight);
+    controlSurface.setBounds(margin, barHeight + 2 * margin, getWidth() - 2 * margin, getHeight() - 3 * margin - barHeight);
 }
 
