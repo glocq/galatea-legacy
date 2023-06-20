@@ -13,7 +13,6 @@ class ControlSurface : public juce::Component
 public:
 
     ControlSurface(MidiSender&);
-    ~ControlSurface();
 
     void paint(juce::Graphics& g) override;
 

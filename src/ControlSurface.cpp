@@ -19,10 +19,6 @@ ControlSurface::ControlSurface(MidiSender& ms) : midiSenderRef(ms)
     }
 }
 
-ControlSurface::~ControlSurface()
-{
-}
-
 void ControlSurface::paint(juce::Graphics& g)
 {
     g.fillAll (juce::Colours::darkgrey);
