@@ -37,6 +37,7 @@ endif()
 target_sources(Galatea
     PRIVATE
         src/ControlSurface.cpp
+        src/SettingsWindow.cpp
         src/MidiSender.cpp
         src/PluginEditor.cpp
         src/PluginProcessor.cpp)

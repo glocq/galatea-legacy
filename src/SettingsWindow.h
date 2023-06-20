@@ -1,10 +1,15 @@
 #pragma once
 
-#include "PluginProcessor.h"
+#include "PluginEditor.h"
 
 
 class SettingsWindow : public juce::DocumentWindow
 {
 public:
-    SettingsWindow() : DocumentWindow("Settings", juce::Colours::red, 7, true) {}
+    SettingsWindow(PluginEditor& owner);
+
+    closeButtonPressed() override;
+
+private:
+    PluginEditor& owner;
 };

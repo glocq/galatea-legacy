@@ -15,6 +15,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    //==============================================================================
+    void closeSettings();
+
 private:
     juce::TextButton settingsButton {"Surface settings"};
     std::optional<SettingsWindow> settingsWindow;

@@ -43,3 +43,8 @@ void AudioPluginAudioProcessorEditor::resized()
     controlSurface.setBounds(margin, barHeight + 2 * margin, getWidth() - 2 * margin, getHeight() - 3 * margin - barHeight);
 }
 
+void AudioPluginAudioProcessorEditor::closeSettings()
+{
+    jassert(settingsWindow.hasValue());
+    settingsWindow.reset();
+}
