@@ -3,7 +3,11 @@
 
 
 SettingsWindow::SettingsWindow(AudioPluginAudioProcessorEditor& o) noexcept
-    : DocumentWindow("Settings", juce::Colours::red, 7, true)
+    : DocumentWindow(
+        "Settings",
+        o.getLookAndFeel().findColour(juce::DocumentWindow::backgroundColourId),
+        7,
+        true)
     , owner(o)
 {
 }
