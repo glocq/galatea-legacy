@@ -3,7 +3,10 @@
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), controlSurface(p.midiSender), processorRef (p)
+    : AudioProcessorEditor (&p)
+    , settingsWindow()
+    , controlSurface(p.midiSender)
+    , processorRef(p)
 {
     juce::ignoreUnused(processorRef);
 
@@ -17,9 +20,11 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     setSize(700, 700);
 
     settingsButton.onClick = [&]() { // see https://forum.juce.com/t/open-a-new-window/40347/8
-        settingsWindow.emplace();
-        settingsWindow->setSize(100, 100);
-        settingsWindow->setVisible(1);
+        if(!settingsWindow.has_value()) {
+            settingsWindow.emplace(*this);
+            settingsWindow->setSize(100, 100);
+            settingsWindow->setVisible(1);
+        }
     };
 }
 
@@ -45,6 +50,6 @@ void AudioPluginAudioProcessorEditor::resized()
 
 void AudioPluginAudioProcessorEditor::closeSettings()
 {
-    jassert(settingsWindow.hasValue());
+    jassert(settingsWindow.has_value());
     settingsWindow.reset();
 }

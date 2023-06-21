@@ -1,15 +1,17 @@
 #pragma once
 
-#include "PluginEditor.h"
+#include <juce_gui_basics/juce_gui_basics.h>
+
+class AudioPluginAudioProcessorEditor;
 
 
 class SettingsWindow : public juce::DocumentWindow
 {
 public:
-    SettingsWindow(PluginEditor& owner);
+    SettingsWindow(AudioPluginAudioProcessorEditor& owner) noexcept;
 
-    closeButtonPressed() override;
+    void closeButtonPressed() override;
 
 private:
-    PluginEditor& owner;
+    AudioPluginAudioProcessorEditor& owner;
 };

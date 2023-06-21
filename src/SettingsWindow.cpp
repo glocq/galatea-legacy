@@ -1,10 +1,14 @@
 #include "SettingsWindow.h"
+#include "PluginEditor.h"
 
 
-SettingsWindow::SettingsWindow() : DocumentWindow("Settings", juce::Colours::red, 7, true)
+SettingsWindow::SettingsWindow(AudioPluginAudioProcessorEditor& o) noexcept
+    : DocumentWindow("Settings", juce::Colours::red, 7, true)
+    , owner(o)
 {
 }
 
-SettingsWindow::closeButtonPressed()
+void SettingsWindow::closeButtonPressed()
 {
+    owner.closeSettings();
 }
