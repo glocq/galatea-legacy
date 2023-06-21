@@ -20,7 +20,9 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     setSize(700, 700);
 
     settingsButton.onClick = [&]() { // see https://forum.juce.com/t/open-a-new-window/40347/8
-        if(!settingsWindow.has_value()) {
+        if(settingsWindow.has_value()) {
+            settingsWindow->toFront(true);
+        } else {
             settingsWindow.emplace(*this);
             settingsWindow->setSize(100, 100);
             settingsWindow->setVisible(1);
