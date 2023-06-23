@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginProcessor.h"
+#include "Processor.h"
 #include "MidiSender.h"
 
 #ifdef LIBINPUT

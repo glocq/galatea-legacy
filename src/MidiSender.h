@@ -3,11 +3,13 @@
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include "Settings.h"
+
 
 class MidiSender
 {
 public:
-    MidiSender();
+    MidiSender(Settings&);
     ~MidiSender();
     void registerMouseContact(float x, float y, float pressure);
     void registerMouseUp();
@@ -20,7 +22,7 @@ private:
     float x = 0;
     float y = 0;
     float pressure = 0;
-    int channel = 1;
-    int baseNote = 60; // all noteOn events will be this note, pitch changes will be provided by the pitch wheel
+
+    Settings& settings;
 };
 

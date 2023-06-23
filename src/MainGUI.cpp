@@ -1,9 +1,9 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "Processor.h"
+#include "MainGUI.h"
 
 //==============================================================================
-AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p)
+MainGUI::MainGUI (Processor& p)
+    : AudioProcessorEditor(&p)
     , settingsWindow()
     , controlSurface(p.midiSender)
     , processorRef(p)
@@ -24,24 +24,23 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
             settingsWindow->toFront(true);
         } else {
             settingsWindow.emplace(*this);
-            settingsWindow->setSize(100, 100);
             settingsWindow->setVisible(1);
         }
     };
 }
 
-AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
+MainGUI::~MainGUI()
 {
 }
 
 //==============================================================================
-void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
+void MainGUI::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 }
 
-void AudioPluginAudioProcessorEditor::resized()
+void MainGUI::resized()
 {
     int barWidth = 130;
     int barHeight = 30;
@@ -50,7 +49,7 @@ void AudioPluginAudioProcessorEditor::resized()
     controlSurface.setBounds(margin, barHeight + 2 * margin, getWidth() - 2 * margin, getHeight() - 3 * margin - barHeight);
 }
 
-void AudioPluginAudioProcessorEditor::closeSettings()
+void MainGUI::closeSettings()
 {
     jassert(settingsWindow.has_value());
     settingsWindow.reset();

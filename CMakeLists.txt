@@ -39,8 +39,8 @@ target_sources(Galatea
         src/ControlSurface.cpp
         src/SettingsWindow.cpp
         src/MidiSender.cpp
-        src/PluginEditor.cpp
-        src/PluginProcessor.cpp)
+        src/MainGUI.cpp
+        src/Processor.cpp)
 
 if(Libinput_FOUND)
     target_sources(Galatea PRIVATE src/LibinputManager.cpp)

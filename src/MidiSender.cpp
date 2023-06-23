@@ -1,13 +1,11 @@
 #include "MidiSender.h"
 
 
-MidiSender::MidiSender()
-{
-}
+MidiSender::MidiSender(Settings& s) : settings(s)
+{}
 
 MidiSender::~MidiSender()
-{
-}
+{}
 
 void MidiSender::registerMouseContact(float xVal, float yVal, float pressureVal)
 {
@@ -30,16 +28,16 @@ void MidiSender::getMidiMessages(juce::MidiBuffer& buffer)
 {
     if (pendingData) {
         if (pointerDown) {
-                buffer.addEvent(juce::MidiMessage::pitchWheel(channel, (int) (16383 * x)), 0);
+                buffer.addEvent(juce::MidiMessage::pitchWheel(settings.midiChannel, (int) (16383 * x)), 0);
             if (playing) {
-                buffer.addEvent(juce::MidiMessage::channelPressureChange(channel, (int) (pressure * 127)), 0);
+                buffer.addEvent(juce::MidiMessage::channelPressureChange(settings.midiChannel, (int) (pressure * 127)), 0);
             } else {
-                buffer.addEvent(juce::MidiMessage::noteOn(channel, baseNote, pressure), 0);
+                buffer.addEvent(juce::MidiMessage::noteOn(settings.midiChannel, settings.baseNote, pressure), 0);
                 playing = true;
             }
         } else {
             if (playing) {
-                buffer.addEvent(juce::MidiMessage::noteOff(channel, baseNote), 0);
+                buffer.addEvent(juce::MidiMessage::noteOff(settings.midiChannel, settings.baseNote), 0);
                 playing = false;
             }
         }
