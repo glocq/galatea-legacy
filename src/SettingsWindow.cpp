@@ -11,9 +11,14 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
     , owner(o)
 {
     setUsingNativeTitleBar(true);
-    centreWithSize(300, 500);
+    centreWithSize(300, 2 * margin + numLines * lineHeight);
+
     addAndMakeVisible(basePitchLabel);
-    addAndMakeVisible(basePitchBtn);
+    addAndMakeVisible(basePitchField);
+    basePitchField.setEditable(true);
+    addAndMakeVisible(midiChannelLabel);
+    addAndMakeVisible(midiChannelField);
+    midiChannelField.setEditable(true);
 }
 
 void SettingsWindow::closeButtonPressed()
@@ -25,15 +30,14 @@ void SettingsWindow::resized()
 {
     DocumentWindow::resized();
 
-    int margin = 30;
-    int lineHeight = 30;
-
     auto area = getLocalBounds();
-    area.reduced(margin);
+    area.reduce(margin, margin);
 
     auto firstLine = area.removeFromTop(lineHeight);
-    basePitchLabel.chan
-    basePitchLabel.setBounds(firstLine.removeFromLeft(50));
-    basePitchBtn.setBounds(firstLine.removeFromLeft(50));
+    basePitchLabel.setBounds(firstLine.removeFromLeft(100));
+    basePitchField.setBounds(firstLine.removeFromLeft(100));
+    auto secondLine = area.removeFromTop(lineHeight);
+    midiChannelLabel.setBounds(secondLine.removeFromLeft(100));
+    midiChannelField.setBounds(secondLine.removeFromLeft(100));
 
 }
