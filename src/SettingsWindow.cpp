@@ -11,6 +11,7 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
     , owner(o)
     , settings(o.getProcessor().settings)
     , basePitchBox(settings.baseNote)
+    , midiChannelBox(settings.midiChannel)
 {
     setUsingNativeTitleBar(true);
 
@@ -19,6 +20,7 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
     addAndMakeVisible(basePitchLabel);
     addAndMakeVisible(basePitchBox);
     addAndMakeVisible(midiChannelLabel);
+    addAndMakeVisible(midiChannelBox);
 }
 
 void SettingsWindow::closeButtonPressed()
@@ -38,5 +40,5 @@ void SettingsWindow::resized()
     basePitchBox.setBounds(firstLine.removeFromLeft(100));
     auto secondLine = area.removeFromTop(lineHeight);
     midiChannelLabel.setBounds(secondLine.removeFromLeft(100));
-
+    midiChannelBox.setBounds(secondLine.removeFromLeft(100));
 }

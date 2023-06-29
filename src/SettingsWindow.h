@@ -35,4 +35,5 @@ private:
     juce::Label basePitchLabel = juce::Label("Base pitch label", "Base Pitch");
     NumberBox basePitchBox;
     juce::Label midiChannelLabel = juce::Label("MIDI channel label", "MIDI channel");
+    NumberBox midiChannelBox;
 };
