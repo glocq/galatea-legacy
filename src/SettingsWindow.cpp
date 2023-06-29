@@ -9,7 +9,8 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
         DocumentWindow::closeButton,
         true)
     , owner(o)
-    , basePitchBox(3) // NumberBox(owner.getProcessor().settings.baseNote))
+    , settings(o.getProcessor().settings)
+    , basePitchBox(settings.baseNote)
 {
     setUsingNativeTitleBar(true);
 

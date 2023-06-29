@@ -4,6 +4,7 @@
 #include <array>
 #include <tuple>
 
+#include "Settings.h"
 #include "NumberBox.h"
 
 class MainGUI;
@@ -15,7 +16,7 @@ public:
     enum class InputType {Int, Float, Text};
 
 public:
-    SettingsWindow(MainGUI& owner) noexcept;
+    SettingsWindow(MainGUI&) noexcept;
 
     void closeButtonPressed() override;
     void resized() override; // the documentation discourages overriding this, but gives no reason.
@@ -23,6 +24,7 @@ public:
 
 private:
     MainGUI& owner;
+    Settings& settings;
 
     // Graphical parameters. It's a bit ugly to store them here,
     // I'll find a better solution at some point
