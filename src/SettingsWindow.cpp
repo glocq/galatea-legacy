@@ -9,16 +9,15 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
         DocumentWindow::closeButton,
         true)
     , owner(o)
+    , basePitchBox(3) // NumberBox(owner.getProcessor().settings.baseNote))
 {
     setUsingNativeTitleBar(true);
+
     centreWithSize(300, 2 * margin + numLines * lineHeight);
 
     addAndMakeVisible(basePitchLabel);
-    addAndMakeVisible(basePitchField);
-    basePitchField.setEditable(true);
+    addAndMakeVisible(basePitchBox);
     addAndMakeVisible(midiChannelLabel);
-    addAndMakeVisible(midiChannelField);
-    midiChannelField.setEditable(true);
 }
 
 void SettingsWindow::closeButtonPressed()
@@ -35,9 +34,8 @@ void SettingsWindow::resized()
 
     auto firstLine = area.removeFromTop(lineHeight);
     basePitchLabel.setBounds(firstLine.removeFromLeft(100));
-    basePitchField.setBounds(firstLine.removeFromLeft(100));
+    basePitchBox.setBounds(firstLine.removeFromLeft(100));
     auto secondLine = area.removeFromTop(lineHeight);
     midiChannelLabel.setBounds(secondLine.removeFromLeft(100));
-    midiChannelField.setBounds(secondLine.removeFromLeft(100));
 
 }

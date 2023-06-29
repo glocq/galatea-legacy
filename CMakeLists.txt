@@ -40,6 +40,7 @@ target_sources(Galatea
         src/SettingsWindow.cpp
         src/MidiSender.cpp
         src/MainGUI.cpp
+        src/NumberBox.cpp
         src/Processor.cpp)
 
 if(Libinput_FOUND)

@@ -54,3 +54,8 @@ void MainGUI::closeSettings()
     jassert(settingsWindow.has_value());
     settingsWindow.reset();
 }
+
+Processor& MainGUI::getProcessor()
+{
+    return processorRef;
+}

@@ -18,6 +18,8 @@ public:
     //==============================================================================
     void closeSettings();
 
+    Processor& getProcessor();
+
 private:
     juce::TextButton settingsButton {"Surface settings"};
     std::optional<SettingsWindow> settingsWindow;

@@ -4,6 +4,8 @@
 #include <array>
 #include <tuple>
 
+#include "NumberBox.h"
+
 class MainGUI;
 
 
@@ -26,11 +28,9 @@ private:
     // I'll find a better solution at some point
     int margin = 20;
     int lineHeight = 20;
+    int numLines = 1;
 
-    std::array<std::tuple<
-        juce::String, // name of the parameter
-        juce::String  // current value
-    >, 1> parameters = {
-        {"MIDI channel", "1"}
-    };
+    juce::Label basePitchLabel = juce::Label("Base pitch label", "Base Pitch");
+    NumberBox basePitchBox;
+    juce::Label midiChannelLabel = juce::Label("MIDI channel label", "MIDI channel");
 };
