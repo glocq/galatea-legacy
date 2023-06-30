@@ -1,6 +1,6 @@
 #include "NumberBox.h"
 
-#include <optional>
+#include <algorithm>
 
 
 NumberBox::NumberBox(float initialValue)
@@ -42,7 +42,27 @@ float NumberBox::getFloat()
     return value;
 }
 
-std::optional<float> NumberBox::parseNumber(juce::String s)
+void NumberBox::addObserver(NumberBoxObserver* new_observer)
+{
+    observers.push_back(new_observer);
+}
+
+void NumberBox::removeObserver(NumberBoxObserver* obs)
+{
+    auto position = std::find(observers.begin(), observers.end(), obs);
+    jassert(position != observers.end());
+    observers.erase(position);
+}
+
+void NumberBox::notifyObservers(float new_value)
+{
+    for(NumberBoxObserver* obs : observers) {
+        obs->updateValue(new_value);
+    }
+}
+
+
+std::optional<float> parseNumber(juce::String s)
 {
     // Normalize to use dot as a separator between integer and fractional part
     s = s.replaceCharacter(',', '.');
