@@ -10,8 +10,8 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
         true)
     , owner(o)
     , settings(o.getProcessor().settings)
-    , basePitchBox(settings.baseNote)
-    , midiChannelBox(settings.midiChannel)
+    , basePitchBox(settings.baseNote, "Base pitch")
+    , midiChannelBox(settings.midiChannel, "MIDI channel")
 {
     setUsingNativeTitleBar(true);
 
@@ -19,8 +19,17 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
 
     addAndMakeVisible(basePitchLabel);
     addAndMakeVisible(basePitchBox);
+    basePitchBox.addObserver(&settings);
+
     addAndMakeVisible(midiChannelLabel);
     addAndMakeVisible(midiChannelBox);
+    midiChannelBox.addObserver(&settings);
+}
+
+SettingsWindow::~SettingsWindow()
+{
+    basePitchBox.removeObserver(&settings);
+    midiChannelBox.removeObserver(&settings);
 }
 
 void SettingsWindow::closeButtonPressed()

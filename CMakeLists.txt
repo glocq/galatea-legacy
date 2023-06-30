@@ -41,7 +41,8 @@ target_sources(Galatea
         src/MidiSender.cpp
         src/MainGUI.cpp
         src/NumberBox.cpp
-        src/Processor.cpp)
+        src/Processor.cpp
+        src/Settings.cpp)
 
 if(Libinput_FOUND)
     target_sources(Galatea PRIVATE src/LibinputManager.cpp)

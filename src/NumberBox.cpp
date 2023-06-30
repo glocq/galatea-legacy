@@ -3,10 +3,13 @@
 #include <algorithm>
 
 
-NumberBox::NumberBox(float initialValue)
+NumberBox::NumberBox(float initialValue, juce::String str)
 {
+    id = str;
+
     value = initialValue;
     editor.setText(juce::String(value));
+
     addAndMakeVisible(editor);
 
     editor.onTextChange = [&]() {
@@ -57,12 +60,12 @@ void NumberBox::removeObserver(NumberBoxObserver* obs)
 void NumberBox::notifyObservers(float new_value)
 {
     for(NumberBoxObserver* obs : observers) {
-        obs->updateValue(new_value);
+        obs->updateValue(new_value, id);
     }
 }
 
 
-std::optional<float> parseNumber(juce::String s)
+std::optional<float> NumberBox::parseNumber(juce::String s)
 {
     // Normalize to use dot as a separator between integer and fractional part
     s = s.replaceCharacter(',', '.');

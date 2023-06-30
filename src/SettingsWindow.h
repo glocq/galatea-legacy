@@ -17,6 +17,7 @@ public:
 
 public:
     SettingsWindow(MainGUI&) noexcept;
+    ~SettingsWindow() override;
 
     void closeButtonPressed() override;
     void resized() override; // the documentation discourages overriding this, but gives no reason.
