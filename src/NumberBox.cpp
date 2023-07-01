@@ -20,7 +20,7 @@ NumberBox::NumberBox(float initialValue, juce::String str)
     editor.onReturnKey = [&]() {
         std::optional<float> v = parseNumber(editor.getText());
         if(v.has_value()) {
-            // TODO update listener!!!
+            notifyObservers(v.value());
             editor.setText(juce::String(v.value()));
             editor.applyColourToAllText(validColor);
         } else {
