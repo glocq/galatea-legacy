@@ -4,12 +4,12 @@
 #include <cmath>
 
 
-void Settings::updateValue(float value, juce::String id)
+void Settings::updateValue(int value, juce::String id)
 {
     if (id == "Base pitch") {
-        baseNote = (int) std::floor(value);
+        baseNote = value;
     } else if (id == "MIDI channel") {
-        midiChannel = (int) std::floor(value);
+        midiChannel = value;
     } else {
         jassert(false);
     }

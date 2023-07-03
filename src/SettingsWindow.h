@@ -5,7 +5,7 @@
 #include <tuple>
 
 #include "Settings.h"
-#include "NumberBox.h"
+#include "IntBox.h"
 
 class MainGUI;
 
@@ -34,7 +34,7 @@ private:
     int numLines = 1;
 
     juce::Label basePitchLabel = juce::Label("Base pitch label", "Base Pitch");
-    NumberBox basePitchBox;
+    IntBox basePitchBox;
     juce::Label midiChannelLabel = juce::Label("MIDI channel label", "MIDI channel");
-    NumberBox midiChannelBox;
+    IntBox midiChannelBox;
 };

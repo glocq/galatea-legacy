@@ -1,9 +1,9 @@
-#include "NumberBox.h"
+#include "IntBox.h"
 
 #include <algorithm>
 
 
-NumberBox::NumberBox(float initialValue, juce::String str)
+IntBox::IntBox(int initialValue, juce::String str)
 {
     id = str;
 
@@ -18,10 +18,11 @@ NumberBox::NumberBox(float initialValue, juce::String str)
     };
 
     editor.onReturnKey = [&]() {
-        std::optional<float> v = parseNumber(editor.getText());
+        std::optional<int> v = parseNumber(editor.getText());
         if(v.has_value()) {
-            notifyObservers(v.value());
-            editor.setText(juce::String(v.value()));
+            value = v.value();
+            notifyObservers();
+            editor.setText(juce::String(value));
             editor.applyColourToAllText(validColor);
         } else {
             editor.applyColourToAllText(pendingColor);
@@ -30,42 +31,42 @@ NumberBox::NumberBox(float initialValue, juce::String str)
     };
 }
 
-void NumberBox::resized()
+void IntBox::resized()
 {
     editor.setBounds(getLocalBounds());
 }
 
-int NumberBox::getInt()
-{
-    return (int) value;
-}
-
-float NumberBox::getFloat()
+int IntBox::getValue()
 {
     return value;
 }
 
-void NumberBox::addObserver(NumberBoxObserver* new_observer)
+void IntBox::addObserver(IntBoxObserver* new_observer)
 {
     observers.push_back(new_observer);
 }
 
-void NumberBox::removeObserver(NumberBoxObserver* obs)
+void IntBox::removeObserver(IntBoxObserver* obs)
 {
     auto position = std::find(observers.begin(), observers.end(), obs);
     jassert(position != observers.end());
     observers.erase(position);
 }
 
-void NumberBox::notifyObservers(float new_value)
+void IntBox::notifyObservers()
 {
-    for(NumberBoxObserver* obs : observers) {
-        obs->updateValue(new_value, id);
+    for(IntBoxObserver* obs : observers) {
+        obs->updateValue(value, id);
     }
 }
 
-
-std::optional<float> NumberBox::parseNumber(juce::String s)
+/**
+ * This function parses an integer number, but will accept floating values,
+ * it will simply round the value down to the integer below (or above, if below zero)
+ * This decision is debatable, but in any case it makes it easy to adapt
+ * to the floating point case.
+ */
+std::optional<int> IntBox::parseNumber(juce::String s)
 {
     // Normalize to use dot as a separator between integer and fractional part
     s = s.replaceCharacter(',', '.');
@@ -96,6 +97,8 @@ std::optional<float> NumberBox::parseNumber(juce::String s)
     s = s.trim(); // remove whitespace around unsigned part
 
     // Now we can isolate the integer and fractional part...
+    // (the fractional part bit is useless, but makes it easy to adapt
+    // to the floating point case)
     juce::String integerPart = s.upToFirstOccurrenceOf(".", false, false);
     juce::String fractionalPart = s.fromFirstOccurrenceOf(".", false, false);
     // check that they are well-formed...
@@ -103,7 +106,7 @@ std::optional<float> NumberBox::parseNumber(juce::String s)
         // turn them back into a normalized form...
         s = integerPart + "." + fractionalPart;
         // and parse that
-        return(s.getFloatValue() * sign);
+        return(integerPart.getFloatValue() * sign);
     } else {
         return {};
     }
