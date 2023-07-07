@@ -31,10 +31,14 @@ private:
     // I'll find a better solution at some point
     int margin = 20;
     int lineHeight = 20;
-    int numLines = 1;
+    int labelWidth = 130;
+    int numLines = 3;
 
     juce::Label basePitchLabel = juce::Label("Base pitch label", "Base Pitch");
     IntBox basePitchBox;
-    juce::Label midiChannelLabel = juce::Label("MIDI channel label", "MIDI channel");
+    juce::Label midiChannelLabel = juce::Label("MIDI channel label", "MIDI Channel");
     IntBox midiChannelBox;
+    juce::Label coordModeLabel = juce::Label("Coordinate mode label", "Coordinate Mode");
+    juce::ComboBox coordModeMenu;
+    void updateCoordMode();
 };

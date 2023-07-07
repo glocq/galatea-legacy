@@ -106,7 +106,7 @@ std::optional<int> IntBox::parseNumber(juce::String s)
         // turn them back into a normalized form...
         s = integerPart + "." + fractionalPart;
         // and parse that
-        return(integerPart.getFloatValue() * sign);
+        return(std::make_optional<int>(integerPart.getFloatValue() * sign));
     } else {
         return {};
     }

@@ -1,5 +1,6 @@
 #include "SettingsWindow.h"
 #include "MainGUI.h"
+#include "Settings.h"
 
 
 SettingsWindow::SettingsWindow(MainGUI& o) noexcept
@@ -15,7 +16,7 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
 {
     setUsingNativeTitleBar(true);
 
-    centreWithSize(300, 2 * margin + numLines * lineHeight);
+    centreWithSize(2*labelWidth, 2 * margin + numLines * lineHeight);
 
     addAndMakeVisible(basePitchLabel);
     addAndMakeVisible(basePitchBox);
@@ -24,6 +25,17 @@ SettingsWindow::SettingsWindow(MainGUI& o) noexcept
     addAndMakeVisible(midiChannelLabel);
     addAndMakeVisible(midiChannelBox);
     midiChannelBox.addObserver(&settings);
+
+    addAndMakeVisible(coordModeLabel);
+    addAndMakeVisible(coordModeMenu);
+    coordModeMenu.addItem("Relative", 1);
+    coordModeMenu.addItem("Absolute", 2);
+    coordModeMenu.onChange = [this] { updateCoordMode(); };
+    if (settings.absoluteCoordMode) {
+        coordModeMenu.setSelectedId(2);
+    } else {
+        coordModeMenu.setSelectedId(1);
+    }
 }
 
 SettingsWindow::~SettingsWindow()
@@ -45,9 +57,25 @@ void SettingsWindow::resized()
     area.reduce(margin, margin);
 
     auto firstLine = area.removeFromTop(lineHeight);
-    basePitchLabel.setBounds(firstLine.removeFromLeft(100));
-    basePitchBox.setBounds(firstLine.removeFromLeft(100));
+    basePitchLabel.setBounds(firstLine.removeFromLeft(labelWidth));
+    basePitchBox.setBounds(firstLine.removeFromLeft(labelWidth));
     auto secondLine = area.removeFromTop(lineHeight);
-    midiChannelLabel.setBounds(secondLine.removeFromLeft(100));
-    midiChannelBox.setBounds(secondLine.removeFromLeft(100));
+    midiChannelLabel.setBounds(secondLine.removeFromLeft(labelWidth));
+    midiChannelBox.setBounds(secondLine.removeFromLeft(labelWidth));
+    auto thirdLine = area.removeFromTop(lineHeight);
+    coordModeLabel.setBounds(thirdLine.removeFromLeft(labelWidth));
+    coordModeMenu.setBounds(thirdLine.removeFromLeft(labelWidth));
+}
+
+void SettingsWindow::updateCoordMode()
+{
+    switch(coordModeMenu.getSelectedId())
+    {
+        case 1:
+            settings.absoluteCoordMode = false;
+            break;
+        case 2:
+            settings.absoluteCoordMode = true;
+            break;
+    }
 }
